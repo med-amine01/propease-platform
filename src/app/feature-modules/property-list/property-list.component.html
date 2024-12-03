@@ -15,7 +15,8 @@
   <cdk-virtual-scroll-viewport itemSize="50" class="viewport">
     <div *cdkVirtualFor="let property of pageData?.content" class="card mb-3">
       <div class="card-body">
-        <h4 class="card-title">{{ property.buildingName }}</h4>
+        <h3 class="card-title">{{ property.buildingName }}</h3>
+        <h5 class="card-title">{{ property.propertyType | propertyType }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">{{ property.city }}, {{ property.country }}</h6>
         <p class="card-text">{{ property.address }} - {{ property.price | currency }}</p>
         <span
