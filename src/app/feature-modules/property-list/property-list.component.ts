@@ -12,7 +12,7 @@ import { Page } from '../../shared/models/page.interface';
 export class PropertyListComponent implements OnInit {
   pageData: Page<Property> | undefined;
   filters: PropertyRequest = {
-    name: null,
+    buildingName: null,
     city: null,
     address: null,
     country: null,

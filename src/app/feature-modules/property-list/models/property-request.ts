@@ -1,5 +1,5 @@
 export class PropertyRequest {
-  name!: string | null;
+  buildingName!: string | null;
   city!: string | null;
   address!: string | null;
   country!: string | null;

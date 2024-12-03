@@ -8,7 +8,7 @@ import { PropertyRequest } from '../models/property-request';
 })
 export class PropertyFiltersComponent {
   @Input() filters: PropertyRequest = {
-    name: null,
+    buildingName: null,
     city: null,
     address: null,
     country: null,
@@ -25,7 +25,7 @@ export class PropertyFiltersComponent {
 
   onClear(): void {
     this.filters = {
-      name: null,
+      buildingName: null,
       city: null,
       address: null,
       country: null,
