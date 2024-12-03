@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { AvailabilityStatus } from '../../feature-modules/property-list/models/property.model';
+import { AvailabilityStatus } from '../enum/availability-status';
 
 @Pipe({
   name: 'availabilityStatus',

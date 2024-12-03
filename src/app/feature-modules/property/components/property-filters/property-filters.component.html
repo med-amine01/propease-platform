@@ -1,7 +1,13 @@
 <div class="filters">
   <form (ngSubmit)="onFilter()">
     <div class="form-group mb-3">
-      <input type="text" class="form-control" placeholder="Building name" [(ngModel)]="filters.buildingName" name="buildingName" />
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Building name"
+        [(ngModel)]="filters.buildingName"
+        name="buildingName"
+      />
     </div>
     <div class="form-group mb-3">
       <input type="text" class="form-control" placeholder="City" [(ngModel)]="filters.city" name="city" />
@@ -35,7 +41,7 @@
     </div>
     <div class="d-flex">
       <button type="submit" class="btn btn-primary">Apply Filters</button>
-      <button type="button" class="btn btn-danger ms-2" (click)="onClear()">Clear Filters</button>
+      <button type="button" class="btn btn-secondary ms-2" (click)="onClear()">Clear Filters</button>
     </div>
   </form>
 </div>

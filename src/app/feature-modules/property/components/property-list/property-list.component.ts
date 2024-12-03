@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { PropertyService } from './service/property.service';
-import { Property } from './models/property.model';
-import { PropertyRequest } from './models/property-request';
-import { Page } from '../../shared/models/page.interface';
+import { PropertyService } from '../../service/property.service';
+import { PropertyRequest } from '../../models/property-request';
+import { Page } from '../../../../shared/models/page.interface';
+import { Property } from '../../models/property';
 
 @Component({
-  selector: 'app-property-list',
+  selector: 'app-property',
   templateUrl: './property-list.component.html',
   styleUrls: ['./property-list.component.css'],
 })
@@ -34,7 +34,7 @@ export class PropertyListComponent implements OnInit {
   loadProperties(): void {
     this.isLoading = true;
     this.isError = false;
-    this.propertyService.listProperties(this.filters, this.currentPage, this.pageSize).subscribe(
+    this.propertyService.fetchPropertiesList(this.filters, this.currentPage, this.pageSize).subscribe(
       data => {
         this.pageData = data;
         this.isLoading = false;

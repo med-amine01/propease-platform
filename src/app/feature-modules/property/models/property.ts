@@ -1,4 +1,8 @@
+import { PropertyType } from '../../../shared/enum/property-type';
+import { AvailabilityStatus } from '../../../shared/enum/availability-status';
+
 export interface Property {
+  id: number;
   name: string;
   propertyType: PropertyType;
   city: string;
@@ -6,14 +10,4 @@ export interface Property {
   address: string;
   price: number;
   availability: AvailabilityStatus;
-}
-
-export enum PropertyType {
-  HOTEL_ROOM = 'HOTEL_ROOM',
-  FLAT = 'FLAT',
-}
-
-export enum AvailabilityStatus {
-  BOOKED = 'BOOKED',
-  AVAILABLE = 'AVAILABLE',
 }

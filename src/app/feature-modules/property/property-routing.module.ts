@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PropertyListComponent } from './property-list.component';
+import { PropertyListComponent } from './components/property-list/property-list.component';
 
 const routes: Routes = [
   {
@@ -13,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class PropertyListRoutingModule {}
+export class PropertyRoutingModule {}

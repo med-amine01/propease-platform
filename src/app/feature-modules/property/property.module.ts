@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { PropertyListRoutingModule } from './property-list-routing.module';
-import { PropertyListComponent } from './property-list.component';
+import { PropertyRoutingModule } from './property-routing.module';
+import { PropertyListComponent } from './components/property-list/property-list.component';
 import { PropertyService } from './service/property.service';
 import { CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { AvailabilityStatusPipe } from '../../shared/pipes/availability-status.pipe';
-import { PropertyFiltersComponent } from './property-filters/property-filters.component';
+import { PropertyFiltersComponent } from './components/property-filters/property-filters.component';
 import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
@@ -15,7 +15,7 @@ import { SharedModule } from '../../shared/shared.module';
   imports: [
     CommonModule,
     FormsModule,
-    PropertyListRoutingModule,
+    PropertyRoutingModule,
     CdkVirtualScrollViewport,
     CdkVirtualForOf,
     CdkFixedSizeVirtualScroll,
@@ -23,4 +23,4 @@ import { SharedModule } from '../../shared/shared.module';
   ],
   providers: [PropertyService],
 })
-export class PropertyListModule {}
+export class PropertyModule {}

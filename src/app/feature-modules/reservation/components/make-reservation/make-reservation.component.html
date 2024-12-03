@@ -1,0 +1,59 @@
+<div class="container mt-4">
+  <h2>Make a Reservation</h2>
+
+  <form [formGroup]="reservationForm" (ngSubmit)="submitReservation()">
+    <div class="form-group">
+      <label for="propertyType">Property Type</label>
+      <select id="propertyType" formControlName="propertyType" class="form-control">
+        <option *ngFor="let type of propertyTypes" [value]="type">
+          {{ type | propertyType }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="buildingName">Building Name</label>
+      <input id="buildingName" type="text" formControlName="buildingName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+      <label for="city">City</label>
+      <input id="city" type="text" formControlName="city" class="form-control" />
+    </div>
+
+    <div class="form-group">
+      <label for="country">Country</label>
+      <select id="country" formControlName="country" class="form-control">
+        <option *ngFor="let country of countries" [value]="country">
+          {{ country }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input id="address" type="text" formControlName="address" class="form-control" />
+    </div>
+
+    <div class="form-group">
+      <label for="price">Price per Day</label>
+      <input id="price" type="number" formControlName="price" class="form-control" />
+    </div>
+
+    <div class="form-group">
+      <label for="startDate">Start Date</label>
+      <input id="startDate" type="date" formControlName="startDate" class="form-control" />
+    </div>
+
+    <div class="form-group">
+      <label for="endDate">End Date</label>
+      <input id="endDate" type="date" formControlName="endDate" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3" [disabled]="reservationForm.invalid">Submit</button>
+  </form>
+
+  <div *ngIf="confirmationMessage" class="alert alert-success mt-4">
+    {{ confirmationMessage }}
+  </div>
+</div>

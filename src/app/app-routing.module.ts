@@ -3,11 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'property-list',
-    loadChildren: () => import('./feature-modules/property-list/property-list.module').then(m => m.PropertyListModule),
+    path: 'property',
+    loadChildren: () => import('./feature-modules/property/property.module').then(m => m.PropertyModule),
   },
-  { path: '', redirectTo: '/property-list', pathMatch: 'full' },
-  { path: '**', redirectTo: '/property-list' },
+  {
+    path: 'reservation',
+    loadChildren: () => import('./feature-modules/reservation/reservation.module').then(m => m.ReservationModule),
+  },
+  { path: '', redirectTo: '/property', pathMatch: 'full' },
+  { path: '**', redirectTo: '/property' },
 ];
 
 @NgModule({
