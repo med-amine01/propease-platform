@@ -1,0 +1,54 @@
+<div class="container">
+  <app-reservation-filters
+    (filtersChanged)="fetchReservations($event)"
+    (clearFiltersEvent)="clearFilters()"
+  ></app-reservation-filters>
+
+  <div *ngIf="isLoading$ | async" class="d-flex justify-content-center">
+    <div class="spinner-border text-primary" role="status"></div>
+  </div>
+
+  <div *ngIf="isError$ | async" class="alert alert-danger text-center">
+    <p>Error occurred while fetching reservations. Please try again.</p>
+  </div>
+
+  <div *ngIf="!(isLoading$ | async) && !(isError$ | async)">
+    <div *ngIf="!(reservationSummary$ | async)?.reservations?.length" class="text-center">
+      <p class="text-primary">No reservations found</p>
+    </div>
+    <div class="card mt-3 mb-3">
+      <div class="card-body">
+        <h5>Summary</h5>
+        <p>Total Money Spent on Flats: {{ (reservationSummary$ | async)?.totalMoneySpentOnFlats | currency }}</p>
+        <p>Total Money Spent on Hotel Rooms: {{ (reservationSummary$ | async)?.totalMoneySpentOnHotelRooms | currency }}</p>
+        <p>Total Money Spent: {{ (reservationSummary$ | async)?.totalMoneySpent | currency }}</p>
+        <p>Most Visited City: {{ (reservationSummary$ | async)?.mostVisitedCity }}</p>
+      </div>
+    </div>
+    <div *ngIf="(reservationSummary$ | async)?.reservations?.length">
+      <cdk-virtual-scroll-viewport itemSize="50" class="viewport">
+        <div *cdkVirtualFor="let reservation of (reservationSummary$ | async)?.reservations" class="card mb-3">
+          <div class="card-header mb-2">
+            {{ reservation.buildingName }}
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ reservation.propertyType | propertyType }}</h5>
+            <p class="card-text">
+              <strong>City:</strong>
+              {{ reservation.city }}, {{ reservation.country }}
+              <br />
+              <strong>Address:</strong>
+              {{ reservation.address }}
+              <br />
+              <strong>Money Spent:</strong>
+              {{ reservation.moneySpent | currency }}
+              <br />
+              <strong>Reservation Dates:</strong>
+              {{ reservation.startDate | date: 'short' }} - {{ reservation.endDate | date: 'short' }}
+            </p>
+          </div>
+        </div>
+      </cdk-virtual-scroll-viewport>
+    </div>
+  </div>
+</div>

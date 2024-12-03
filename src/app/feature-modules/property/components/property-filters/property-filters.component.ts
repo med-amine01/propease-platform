@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { PropertyRequest } from '../models/property-request';
+import { PropertyRequest } from '../../models/property-request';
 
 @Component({
   selector: 'app-property-filters',
