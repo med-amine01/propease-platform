@@ -15,16 +15,53 @@
   <div *ngIf="!(isLoading$ | async) && !(isError$ | async)">
     <div *ngIf="!(reservationSummary$ | async)?.reservations?.length" class="text-center">
       <p class="text-primary">No reservations found</p>
+      <img src="assets/img/no-data-found.svg" alt="No data found" class="img-fluid" style="max-width: 500px" />
     </div>
-    <div class="card mt-3 mb-3">
-      <div class="card-body">
-        <h5>Summary</h5>
-        <p>Total Money Spent on Flats: {{ (reservationSummary$ | async)?.totalMoneySpentOnFlats | currency }}</p>
-        <p>Total Money Spent on Hotel Rooms: {{ (reservationSummary$ | async)?.totalMoneySpentOnHotelRooms | currency }}</p>
-        <p>Total Money Spent: {{ (reservationSummary$ | async)?.totalMoneySpent | currency }}</p>
-        <p>Most Visited City: {{ (reservationSummary$ | async)?.mostVisitedCity }}</p>
+
+    <div *ngIf="(reservationSummary$ | async)?.reservations?.length" class="row mt-3">
+      <div class="col-md-3 mb-3" *ngIf="(reservationSummary$ | async)?.totalMoneySpent">
+        <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+          <div class="card-header">Total Money Spent</div>
+          <div class="card-body">
+            <h4 class="card-title">
+              {{ (reservationSummary$ | async)?.totalMoneySpent | currency: 'EUR' }}
+            </h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 mb-3" *ngIf="(reservationSummary$ | async)?.totalMoneySpentOnFlats">
+        <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+          <div class="card-header">Total Money Spent on Flats</div>
+          <div class="card-body">
+            <h4 class="card-title">
+              {{ (reservationSummary$ | async)?.totalMoneySpentOnFlats | currency: 'EUR' }}
+            </h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 mb-3" *ngIf="(reservationSummary$ | async)?.totalMoneySpentOnHotelRooms">
+        <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+          <div class="card-header">Total Money Spent on Hotel Rooms</div>
+          <div class="card-body">
+            <h4 class="card-title">
+              {{ (reservationSummary$ | async)?.totalMoneySpentOnHotelRooms | currency: 'EUR' }}
+            </h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 mb-3" *ngIf="(reservationSummary$ | async)?.mostVisitedCity">
+        <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+          <div class="card-header">Most Visited City</div>
+          <div class="card-body">
+            <h4 class="card-title">
+              {{ (reservationSummary$ | async)?.mostVisitedCity }}
+            </h4>
+          </div>
+        </div>
       </div>
     </div>
+
+
     <div *ngIf="(reservationSummary$ | async)?.reservations?.length">
       <cdk-virtual-scroll-viewport itemSize="50" class="viewport">
         <div *cdkVirtualFor="let reservation of (reservationSummary$ | async)?.reservations" class="card mb-3">
@@ -41,10 +78,11 @@
               {{ reservation.address }}
               <br />
               <strong>Money Spent:</strong>
-              {{ reservation.moneySpent | currency }}
+              {{ reservation.moneySpent | currency: 'EUR' }}
               <br />
               <strong>Reservation Dates:</strong>
-              {{ reservation.startDate | date: 'short' }} - {{ reservation.endDate | date: 'short' }}
+              {{ reservation.startDate | date: 'dd/MM/yyyy hh:mm' }}
+              - {{ reservation.endDate | date: 'dd/MM/yyyy hh:mm' }}
             </p>
           </div>
         </div>

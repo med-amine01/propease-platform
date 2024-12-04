@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { PropertyRoutingModule } from './property-routing.module';
 import { PropertyListComponent } from './components/property-list/property-list.component';
@@ -11,7 +11,7 @@ import { PropertyFiltersComponent } from './components/property-filters/property
 import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
-  declarations: [PropertyListComponent, AvailabilityStatusPipe, PropertyFiltersComponent],
+  declarations: [PropertyListComponent, AvailabilityStatusPipe, PropertyFiltersComponent, PropertyFiltersComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -20,6 +20,7 @@ import { SharedModule } from '../../shared/shared.module';
     CdkVirtualForOf,
     CdkFixedSizeVirtualScroll,
     SharedModule,
+    ReactiveFormsModule,
   ],
   providers: [PropertyService],
 })

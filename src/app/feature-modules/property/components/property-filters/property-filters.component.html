@@ -1,47 +1,53 @@
 <div class="filters">
-  <form (ngSubmit)="onFilter()">
+  <form [formGroup]="filtersForm" (ngSubmit)="onFilter()">
+    <!-- Search Bar -->
     <div class="form-group mb-3">
       <input
         type="text"
         class="form-control"
-        placeholder="Building name"
-        [(ngModel)]="filters.buildingName"
-        name="buildingName"
+        placeholder="Search by building name, city, or address"
+        formControlName="search"
       />
     </div>
+
+    <!-- Dropdown for Country -->
     <div class="form-group mb-3">
-      <input type="text" class="form-control" placeholder="City" [(ngModel)]="filters.city" name="city" />
-    </div>
-    <div class="form-group mb-3">
-      <input type="text" class="form-control" placeholder="Address" [(ngModel)]="filters.address" name="address" />
-    </div>
-    <div class="form-group mb-3">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Country (3-letter code)"
-        [(ngModel)]="filters.country"
-        name="country"
-      />
-    </div>
-    <div class="form-group mb-3">
-      <label>Price Range:</label>
-      <div class="d-flex">
-        <input type="number" class="form-control me-2" placeholder="Min" [(ngModel)]="filters.minPrice" name="minPrice" />
-        <input type="number" class="form-control" placeholder="Max" [(ngModel)]="filters.maxPrice" name="maxPrice" />
-      </div>
-    </div>
-    <div class="form-group mb-3">
-      <label>Availability:</label>
-      <select class="form-control" [(ngModel)]="filters.availability" name="availability">
+      <label class="form-label" for="country">Country</label>
+      <select class="form-control" formControlName="country" id="country">
         <option [ngValue]="null">All</option>
-        <option [ngValue]="true">Available</option>
-        <option [ngValue]="false">Booked</option>
+        <option value="USA">USA</option>
+        <option value="FRA">France</option>
+        <option value="TUN">Tunisia</option>
       </select>
     </div>
+
+    <!-- Sliders for Price Range -->
+    <div class="form-group mb-3">
+      <label class="form-label">Price Range:</label>
+      <div class="d-flex align-items-center">
+        <input type="range" class="form-range" min="0.01" max="10000" step="100" formControlName="minPrice" />
+        <span class="ms-2">Min: {{ filtersForm.value?.minPrice ?? 0 | currency: 'EUR' }}</span>
+        <input type="range" class="form-range ms-3" min="0.01" max="10000" step="100" formControlName="maxPrice" />
+        <span class="ms-2">Max: {{ filtersForm.value?.maxPrice ?? 10000 | currency: 'EUR' }}</span>
+      </div>
+    </div>
+
+    <!-- Availability -->
+    <div class="form-group mb-3">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="available" formControlName="availability" [value]="true" />
+        <label class="form-check-label" for="available">Available</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="booked" formControlName="availability" [value]="false" />
+        <label class="form-check-label" for="booked">Booked</label>
+      </div>
+    </div>
+
+    <!-- Buttons -->
     <div class="d-flex">
-      <button type="submit" class="btn btn-primary">Apply Filters</button>
-      <button type="button" class="btn btn-secondary ms-2" (click)="onClear()">Clear Filters</button>
+      <button type="submit" class="btn btn-primary" [disabled]="filtersForm.invalid">Apply Filters</button>
+      <button type="button" class="btn btn-secondary ms-2" (click)="onClear()">Clear</button>
     </div>
   </form>
 </div>
