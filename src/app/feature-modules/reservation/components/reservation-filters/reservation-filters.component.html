@@ -1,56 +1,73 @@
-<form [formGroup]="filtersForm" class="mb-4">
-  <div class="row">
-    <div class="col-md-4 mb-3">
-      <label for="userId" class="form-label">User ID</label>
-      <input id="userId" type="number" class="form-control" formControlName="userId" />
+<div class="filters">
+  <form [formGroup]="filtersForm" (ngSubmit)="applyFilters()">
+    <!-- Search Bar -->
+    <div class="form-group mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search by building name, city, or address"
+        formControlName="search"
+      />
     </div>
-    <div class="col-md-4 mb-3">
-      <label for="propertyType" class="form-label">Property Type</label>
-      <select id="propertyType" class="form-select" formControlName="propertyType">
-        <option [value]="null">All</option>
-        <option [value]="PropertyType.FLAT">Flat</option>
-        <option [value]="PropertyType.HOTEL_ROOM">Hotel Room</option>
-      </select>
+
+    <div class="row">
+      <!-- User ID -->
+      <div class="form-group col-md-4 mb-3">
+        <label for="userId" class="form-label">User ID</label>
+        <input id="userId" type="number" class="form-control" formControlName="userId" />
+      </div>
+
+      <!-- Dropdown for Property Type -->
+      <div class="form-group col-md-4 mb-3">
+        <label for="propertyType" class="form-label">Property Type</label>
+        <select id="propertyType" class="form-select" formControlName="propertyType">
+          <option [ngValue]="null">All</option>
+          <option [ngValue]="PropertyType.FLAT">{{ PropertyType.FLAT | propertyType }}</option>
+          <option [ngValue]="PropertyType.HOTEL_ROOM">{{ PropertyType.HOTEL_ROOM | propertyType }}</option>
+        </select>
+      </div>
+
+      <!-- Dropdown for Country -->
+      <div class="form-group col-md-4 mb-3">
+        <label for="country" class="form-label">Country</label>
+        <select id="country" class="form-select" formControlName="country">
+          <option [ngValue]="null">All</option>
+          <option value="USA">USA</option>
+          <option value="FRA">France</option>
+          <option value="TUN">Tunisia</option>
+        </select>
+      </div>
     </div>
-    <div class="col-md-4 mb-3">
-      <label for="buildingName" class="form-label">Building Name</label>
-      <input id="buildingName" type="text" class="form-control" formControlName="buildingName" />
+
+    <!-- Sliders for Price Range -->
+    <div class="form-group mb-3">
+      <label class="form-label">Price Range:</label>
+      <div class="d-flex align-items-center">
+        <input type="range" class="form-range" min="0.01" max="10000" step="100" formControlName="minPrice" />
+        <span class="ms-2">Min: {{ filtersForm.value?.minPrice ?? 0 | currency: 'EUR' }}</span>
+        <input type="range" class="form-range ms-3" min="0.01" max="10000" step="100" formControlName="maxPrice" />
+        <span class="ms-2">Max: {{ filtersForm.value?.maxPrice ?? 10000 | currency: 'EUR' }}</span>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4 mb-3">
-      <label for="city" class="form-label">City</label>
-      <input id="city" type="text" class="form-control" formControlName="city" />
+
+    <!-- Date Range -->
+    <div class="row">
+      <!-- Start Date -->
+      <div class="col-md-6 mb-3">
+        <label for="startDate" class="form-label">Start Date</label>
+        <input id="startDate" type="date" class="form-control" formControlName="startDate" />
+      </div>
+      <!-- End Date -->
+      <div class="col-md-6 mb-3">
+        <label for="endDate" class="form-label">End Date</label>
+        <input id="endDate" type="date" class="form-control" formControlName="endDate" />
+      </div>
     </div>
-    <div class="col-md-4 mb-3">
-      <label for="address" class="form-label">Address</label>
-      <input id="address" type="text" class="form-control" formControlName="address" />
+
+    <!-- Buttons -->
+    <div>
+      <button type="submit" class="btn btn-primary me-2">Apply Filters</button>
+      <button type="button" class="btn btn-secondary" (click)="clearFilters()">Clear Filters</button>
     </div>
-    <div class="col-md-4 mb-3">
-      <label for="country" class="form-label">Country</label>
-      <input id="country" type="text" class="form-control" formControlName="country" />
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4 mb-3">
-      <label for="minPrice" class="form-label">Min Price</label>
-      <input id="minPrice" type="number" class="form-control" formControlName="minPrice" />
-    </div>
-    <div class="col-md-4 mb-3">
-      <label for="maxPrice" class="form-label">Max Price</label>
-      <input id="maxPrice" type="number" class="form-control" formControlName="maxPrice" />
-    </div>
-    <div class="col-md-4 mb-3">
-      <label for="startDate" class="form-label">Start Date</label>
-      <input id="startDate" type="date" class="form-control" formControlName="startDate" />
-    </div>
-    <div class="col-md-4 mb-3">
-      <label for="endDate" class="form-label">End Date</label>
-      <input id="endDate" type="date" class="form-control" formControlName="endDate" />
-    </div>
-  </div>
-  <div class="d-flex justify-content-end">
-    <button type="button" class="btn btn-primary me-2" (click)="applyFilters()">Search</button>
-    <button type="button" class="btn btn-secondary" (click)="clearFilters()">Clear Filters</button>
-  </div>
-</form>
+  </form>
+</div>

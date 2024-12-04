@@ -3,7 +3,7 @@ import { AvailabilityStatus } from '../../../shared/enum/availability-status';
 
 export interface Property {
   id: number;
-  name: string;
+  buildingName: string;
   propertyType: PropertyType;
   city: string;
   country: string;

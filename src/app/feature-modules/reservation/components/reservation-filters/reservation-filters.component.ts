@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { PropertyType } from '../../../../shared/enum/property-type';
 import { ReservationSearchFilter } from '../../models/request/reservation-search-filter';
@@ -7,6 +7,7 @@ import { ReservationSearchFilter } from '../../models/request/reservation-search
   selector: 'app-reservation-filters',
   templateUrl: './reservation-filters.component.html',
   styleUrls: ['./reservation-filters.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReservationFiltersComponent implements OnInit {
   @Output() filtersChanged = new EventEmitter<ReservationSearchFilter>();
@@ -19,10 +20,15 @@ export class ReservationFiltersComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
+
+    this.filtersForm.get('search')?.valueChanges.subscribe((searchValue: string) => {
+      this.updateSearchFields(searchValue);
+    });
   }
 
   private initializeForm(): void {
     this.filtersForm = this.fb.group({
+      search: [''],
       userId: [null],
       propertyType: [null],
       buildingName: [null],
@@ -36,12 +42,25 @@ export class ReservationFiltersComponent implements OnInit {
     });
   }
 
+  private updateSearchFields(searchValue: string): void {
+    const normalizedValue = searchValue?.trim() || null;
+    this.filtersForm.patchValue(
+      {
+        buildingName: normalizedValue,
+        city: normalizedValue,
+        address: normalizedValue,
+      },
+      { emitEvent: false },
+    );
+  }
+
   applyFilters(): void {
-    this.filtersChanged.emit(this.filtersForm.value);
+    const { search, ...filtersWithoutSearch } = this.filtersForm.value;
+    this.filtersChanged.emit(filtersWithoutSearch);
   }
 
   clearFilters(): void {
     this.filtersForm.reset();
-    this.clearFiltersEvent.emit();
+    this.filtersChanged.emit(this.filtersForm.value);
   }
 }

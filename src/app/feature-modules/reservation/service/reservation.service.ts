@@ -15,10 +15,9 @@ export class ReservationService {
 
   constructor(private http: HttpClient) {}
 
-  fetchReservationsList(filter: ReservationSearchFilter | null = null): Observable<ReservationSummary> {
+  fetchReservationsList(filter: ReservationSearchFilter): Observable<ReservationSummary> {
     let param = `${this.apiUrl}/search`;
     param += filter?.propertyType ? `?propertyType=${filter?.propertyType}` : '';
-
     return this.http.post<ReservationSummary>(param, filter);
   }
 

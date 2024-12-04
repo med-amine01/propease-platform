@@ -13,7 +13,6 @@ import Swal from 'sweetalert2';
 })
 export class MakeReservationComponent implements OnInit {
   reservationForm!: FormGroup;
-  confirmationMessage: string | null = null;
   propertyTypes = ['FLAT', 'HOTEL_ROOM'];
   countries = ['USA', 'CAN', 'FRA', 'CHE', 'GBR'];
   userId: number = 0;
@@ -33,6 +32,7 @@ export class MakeReservationComponent implements OnInit {
 
   private initializeForm(): void {
     this.reservationForm = this.fb.group({
+      userId: [Validators.required, Validators.min(1)],
       propertyType: [{ value: null, disabled: true }, Validators.required],
       buildingName: [{ value: null, disabled: true }, Validators.required],
       city: [{ value: null, disabled: true }, Validators.required],
@@ -46,7 +46,7 @@ export class MakeReservationComponent implements OnInit {
 
   private prefillFormFromQueryParams(): void {
     this.route.queryParams.subscribe(params => {
-      this.propertyId = +params['propertyId'];
+      this.propertyId = +params['id'];
       this.userId = +params['userId'];
       this.reservationForm.patchValue({
         propertyType: params['propertyType'] || null,
@@ -61,11 +61,11 @@ export class MakeReservationComponent implements OnInit {
 
   submitReservation(): void {
     if (this.reservationForm.invalid) {
+      this.reservationForm.markAsDirty();
       return;
     }
 
     const reservation: ReservationRequest = this.reservationForm.value;
-    reservation.userId = this.userId;
     reservation.propertyId = this.propertyId;
 
     this.reservationService.createReservation(reservation).subscribe({
@@ -89,5 +89,9 @@ export class MakeReservationComponent implements OnInit {
         });
       },
     });
+  }
+
+  cancel(): void {
+    this.router.navigate(['/property-list']);
   }
 }
